@@ -43,8 +43,8 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   echo ">>>> Fetching files from git repository..."
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
-  git checkout -B $PR_BASE origin/$PR_BASE
-  git fetch --all
+  git fetch origin
+  git reset --hard origin/$PR_BASE
   git branch -l
   git checkout $PR_BRANCH
   cd $SOURCE_DIR

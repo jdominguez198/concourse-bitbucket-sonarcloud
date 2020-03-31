@@ -19,9 +19,7 @@ mkdir -p /root/.ssh && \
 echo ">>>> Fetching files from git repository..."
 SOURCE_DIR=$(pwd)
 cd $INPUT_FOLDER
-git fetch --all
-git checkout master
-git reset --hard
+git checkout -B $PR_BASE origin/$PR_BASE
 git fetch --all
 git branch -l
 git checkout $PR_BRANCH

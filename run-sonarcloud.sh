@@ -11,6 +11,7 @@
 echo ">>>> Showing files from directory..."
 ls -lah $INPUT_FOLDER
 ls -lah $INPUT_FOLDER/.git
+exit 1
 
 echo ">>>> Getting Pull Request info if exists..."
 if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then

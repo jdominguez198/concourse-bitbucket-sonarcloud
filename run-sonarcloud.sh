@@ -8,10 +8,8 @@
 : "${SONAR_PROJECT_ORGANIZATION:?}"
 : "${SONAR_TOKEN:?}"
 
-echo ">>>> Showing files from directory..."
-ls -lah $INPUT_FOLDER
-ls -lah $INPUT_FOLDER/.git
-exit 1
+echo ">>>> Fetching files from git repository..."
+cd $INPUT_FOLDER && git fetch
 
 echo ">>>> Getting Pull Request info if exists..."
 if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then

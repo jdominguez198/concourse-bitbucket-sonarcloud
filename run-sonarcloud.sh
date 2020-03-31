@@ -18,7 +18,7 @@ mkdir -p /root/.ssh && \
 
 echo ">>>> Fetching files from git repository..."
 SOURCE_DIR=$(pwd)
-cd $INPUT_FOLDER && git fetch
+cd $INPUT_FOLDER && git fetch origin $PR_BASE
 cd $SOURCE_DIR
 
 echo ">>>> Getting Pull Request info if exists..."

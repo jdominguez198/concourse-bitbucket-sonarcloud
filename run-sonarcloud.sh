@@ -11,27 +11,28 @@
 
 call_sonarcloud_docker_run () {
   SONAR_COMMAND=(
-    "docker run -ti -v $(pwd)/$INPUT_FOLDER:/usr/src newtmitch/sonar-scanner:alpine"
+    "docker run -ti -v $(pwd)/${INPUT_FOLDER}:/usr/src"
+    "newtmitch/sonar-scanner:alpine"
     "-Dsonar.projectBaseDir=/usr/src"
-    "-Dsonar.projectKey=$SONAR_PROJECT_KEY"
-    "-Dsonar.projectName=$SONAR_PROJECT_NAME"
-    "-Dsonar.organization=$SONAR_PROJECT_ORGANIZATION"
-    "-Dsonar.sources=$REPOSITORY_SOURCES"
+    "-Dsonar.projectKey=${SONAR_PROJECT_KEY}"
+    "-Dsonar.projectName=${SONAR_PROJECT_NAME}"
+    "-Dsonar.organization=${SONAR_PROJECT_ORGANIZATION}"
+    "-Dsonar.sources=${REPOSITORY_SOURCES}"
     "-Dsonar.host.url=https://sonarcloud.io"
-    "-Dsonar.login=$SONAR_TOKEN"
-    "-Dsonar.exclusions=$REPOSITORY_EXCLUSIONS"
+    "-Dsonar.login=${SONAR_TOKEN}"
+    "-Dsonar.exclusions=${REPOSITORY_EXCLUSIONS}"
   )
   if [[ ! -z "$PR_ID" && ! -z "$PR_BASE" && ! -z "$PR_BRANCH" ]]; then
     SONAR_COMMAND+=(
       "-Dsonar.pullrequest.provider=bitbucketcloud"
-      "-Dsonar.pullrequest.bitbucketcloud.owner=$REPOSITORY_OWNER"
-      "-Dsonar.pullrequest.bitbucketcloud.repository=$REPOSITORY_NAME"
-      "-Dsonar.pullrequest.key=$PR_ID"
-      "-Dsonar.pullrequest.branch=$PR_BRANCH"
-      "-Dsonar.pullrequest.base=$PR_BASE"
+      "-Dsonar.pullrequest.bitbucketcloud.owner=${REPOSITORY_OWNER}"
+      "-Dsonar.pullrequest.bitbucketcloud.repository=${REPOSITORY_NAME}"
+      "-Dsonar.pullrequest.key=${PR_ID}"
+      "-Dsonar.pullrequest.branch=${PR_BRANCH}"
+      "-Dsonar.pullrequest.base=${PR_BASE}"
     )
   fi
-  $(${SONAR_COMMAND[@]})
+  eval "${SONAR_COMMAND[@]}"
 }
 
 echo ">>>> Loading repository credentials..."

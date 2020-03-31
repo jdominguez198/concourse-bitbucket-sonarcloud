@@ -8,6 +8,10 @@
 : "${SONAR_PROJECT_ORGANIZATION:?}"
 : "${SONAR_TOKEN:?}"
 
+echo ">>>> Showing files from directory..."
+ls -lah $INPUT_FOLDER
+ls -lah $INPUT_FOLDER/.git
+
 echo ">>>> Getting Pull Request info if exists..."
 if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   echo ">>>> Running SonarCloud tests for Pull Request..."

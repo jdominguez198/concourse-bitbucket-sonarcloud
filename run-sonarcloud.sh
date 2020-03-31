@@ -40,11 +40,11 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   export PR_ID=$(jq -r '.id' "$INPUT_FOLDER/pull-request-info")
   export PR_BRANCH=$(jq -r '.feature_branch' "$INPUT_FOLDER/pull-request-info")
   export PR_BASE=$(jq -r '.upstream_branch' "$INPUT_FOLDER/pull-request-info")
-  echo ">>>> Fetching files from git repository..."
+  echo ">>>> Fetching files from \"$PR_BASE\" branch..."
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
   git fetch origin
-  git reset --hard origin/$PR_BASE
+  git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/$PR_BASE
   git branch -l
   git checkout $PR_BRANCH
   cd $SOURCE_DIR

@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 
 : "${INPUT_FOLDER:?}"
+: "${REPOSITORY_SSH_KEY:?}"
 : "${REPOSITORY_EXCLUSIONS:?}"
 : "${REPOSITORY_SOURCES:?}"
 : "${SONAR_PROJECT_KEY:?}"
 : "${SONAR_PROJECT_NAME:?}"
 : "${SONAR_PROJECT_ORGANIZATION:?}"
 : "${SONAR_TOKEN:?}"
+
+echo ">>>> Loading repository credentials..."
+mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan bitbucket.org > /root/.ssh/known_hosts && \
+    echo "$REPOSITORY_SSH_KEY" > /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa
 
 echo ">>>> Fetching files from git repository..."
 cd $INPUT_FOLDER && git fetch

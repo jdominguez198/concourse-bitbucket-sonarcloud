@@ -15,6 +15,7 @@ RUN apk --update --no-cache add \
         util-linux \
         ca-certificates \
         jq \
+        openssh-client \
         git \
         && \
     apk upgrade && \

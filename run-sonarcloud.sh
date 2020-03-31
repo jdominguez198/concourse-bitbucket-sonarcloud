@@ -40,11 +40,13 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   export PR_ID=$(jq -r '.id' "$INPUT_FOLDER/pull-request-info")
   export PR_BRANCH=$(jq -r '.feature_branch' "$INPUT_FOLDER/pull-request-info")
   export PR_BASE=$(jq -r '.upstream_branch' "$INPUT_FOLDER/pull-request-info")
-  REPOSITORY_GIT_URL=$(git config --get remote.origin.url)
   echo ">>>> Fetching files from \"$PR_BASE\" branch..."
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
-  git remote remove origin && git remote add origin $REPOSITORY_GIT_URL && git fetch origin $PR_BRANCH
+#  REPOSITORY_GIT_URL=$(git config --get remote.origin.url)
+#  git remote remove origin && git remote add origin $REPOSITORY_GIT_URL && git fetch origin $PR_BASE
+  git fetch origin '+refs/heads/*:${PR_BASE}/remotes/origin/${PR_BASE}'
+  cat .git/config
   cd $SOURCE_DIR
   echo ">>>> Running SonarCloud tests for Pull Request..."
   docker run -ti -v $(pwd)/$INPUT_FOLDER:/usr/src newtmitch/sonar-scanner:alpine \

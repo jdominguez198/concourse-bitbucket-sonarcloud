@@ -18,7 +18,7 @@ mkdir -p /root/.ssh && \
 
 echo ">>>> Fetching files from git repository..."
 SOURCE_DIR=$(pwd)
-cd $INPUT_FOLDER && git fetch origin $PR_BASE
+cd $INPUT_FOLDER && git fetch --all
 git branch -l
 cd $SOURCE_DIR
 

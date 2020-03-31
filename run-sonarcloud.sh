@@ -51,10 +51,7 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   echo ">>>> Fetching files from \"$PR_BASE\" branch..."
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
-#  REPOSITORY_GIT_URL=$(git config --get remote.origin.url)
-#  git remote remove origin && git remote add origin $REPOSITORY_GIT_URL && git fetch origin $PR_BASE
   git fetch origin '+refs/heads/'"$PR_BASE"':refs/remotes/origin/'"$PR_BASE"''
-  cat .git/config
   cd $SOURCE_DIR
 fi
 

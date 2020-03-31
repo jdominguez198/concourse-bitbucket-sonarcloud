@@ -31,7 +31,7 @@ call_sonarcloud_docker_run () {
       "-Dsonar.pullrequest.base=$PR_BASE"
     )
   fi
-  "${SONAR_COMMAND[@]}"
+  $(${SONAR_COMMAND[@]})
 }
 
 echo ">>>> Loading repository credentials..."
@@ -52,13 +52,11 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   cd $INPUT_FOLDER
 #  REPOSITORY_GIT_URL=$(git config --get remote.origin.url)
 #  git remote remove origin && git remote add origin $REPOSITORY_GIT_URL && git fetch origin $PR_BASE
-  git fetch origin '+refs/heads/*:'"$PR_BASE"'/remotes/origin/'"$PR_BASE"''
+  git fetch origin '+refs/heads/'"$PR_BASE"':refs/remotes/origin/'"$PR_BASE"''
   cat .git/config
   cd $SOURCE_DIR
-  echo ">>>> Running SonarCloud tests for Pull Request..."
-else
-  echo ">>>> Running SonarCloud tests..."
 fi
 
+echo ">>>> Running SonarCloud tests..."
 call_sonarcloud_docker_run
 

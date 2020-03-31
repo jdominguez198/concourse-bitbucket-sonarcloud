@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 : "${INPUT_FOLDER:?}"
+: "${REPOSITORY_GIT_URL:?}"
 : "${REPOSITORY_SSH_KEY:?}"
 : "${REPOSITORY_EXCLUSIONS:?}"
 : "${REPOSITORY_SOURCES:?}"
@@ -44,6 +45,9 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
   cat .git/config
+  git remote remove origin
+  git remote add origin $REPOSITORY_GIT_URL
+  git fetch origin
   git branch -l
   git checkout $PR_BRANCH
   cd $SOURCE_DIR

@@ -17,7 +17,9 @@ mkdir -p /root/.ssh && \
     chmod 600 /root/.ssh/id_rsa
 
 echo ">>>> Fetching files from git repository..."
+SOURCE_DIR=$(pwd)
 cd $INPUT_FOLDER && git fetch
+cd $SOURCE_DIR
 
 echo ">>>> Getting Pull Request info if exists..."
 if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then

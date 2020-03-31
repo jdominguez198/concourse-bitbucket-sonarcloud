@@ -43,8 +43,7 @@ if [[ -f "$INPUT_FOLDER/pull-request-info" ]]; then
   echo ">>>> Fetching files from \"$PR_BASE\" branch..."
   SOURCE_DIR=$(pwd)
   cd $INPUT_FOLDER
-  git fetch origin
-  git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/$PR_BASE
+  cat .git/config
   git branch -l
   git checkout $PR_BRANCH
   cd $SOURCE_DIR
